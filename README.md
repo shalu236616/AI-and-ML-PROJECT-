@@ -1,61 +1,63 @@
+# AI & ML for Cyber Security — Projects
 
-# AI & ML for Cyber Security — Intrusion Detection Projects
-
-Machine learning experiments applying decision trees, ensemble methods, and time-series analysis to network intrusion detection.
+Machine learning and deep learning experiments applying classical ML, ensemble methods, and neural networks to network intrusion detection and phishing website detection.
 
 ## 📂 Contents
 
 | Notebook | What it does |
 |---|---|
-| `IREP_Decision_Tree_On_Intrusion_detection.ipynb` | Applies IREP-based decision tree rule induction to classify network traffic as normal vs. malicious |
-| `modification_of_decision_tree_using_AdaBoost.ipynb` | Boosts a decision tree classifier with AdaBoost to improve intrusion detection performance |
-| `Analyze_Time_Series_Network_Traffic_Data.ipynb` | Explores traffic patterns by hour and source IP, used to understand the data before building the detection models below |
-| `PROJECT_WORK.ipynb` |  |
+| `IREP_Decision_Tree_On_Intrusion_detection.ipynb` | Trains a decision tree on network intrusion data, then extracts and prunes classification rules from the tree using a simplified IREP-style (Incremental Reduced Error Pruning) approach |
+| `modification_of_decision_tree_using_AdaBoost.ipynb` | Benchmarks Decision Tree, AdaBoost (boosted decision stumps), and Logistic Regression on the same intrusion detection dataset |
+| `PROJECT_WORK.ipynb` | Phishing website detection using a Keras neural network, benchmarked against Random Forest, XGBoost, Logistic Regression, and SVM |
+| `Analyze_Time_Series_Network_Traffic_Data.ipynb` | Exploratory time-series analysis of network traffic — request patterns by source IP and traffic volume by hour |
 
-## 🎯 Problem
+## 📊 Datasets
 
-Network intrusion detection systems (IDS) need to classify traffic as benign or malicious in real time. This repo explores how classic ML models (decision trees) and ensemble boosting (AdaBoost) perform on this task, along with time-series patterns in traffic data.
-
-## 📊 Dataset
-
-<!-- Fill in: -->
-- **Name:** e.g. NSL-KDD / UNSW-NB15 / CICIDS2017
-- **Source:** link to dataset
-- **Size:** number of records, number of features
-- **Classes:** e.g. Normal, DoS, Probe, R2L, U2R
-
-## ⚙️ Approach
-
-<!-- Fill in: -->
-- Preprocessing steps (encoding, scaling, feature selection)
-- Train/test split ratio
-- Models used and why (IREP decision tree, AdaBoost-boosted tree)
-- Evaluation metrics used (accuracy, precision, recall, F1, confusion matrix)
+- **Intrusion detection** — `cybersecurity_intrusion_data.csv`: 9,537 sessions, 11 features (network packet size, protocol type, login attempts, session duration, encryption used, IP reputation score, failed logins, browser type, unusual time access). Binary target `attack_detected` (5,273 normal / 4,264 attack).
+- **Phishing detection** — `phishing website dataset.csv`: 11,055 URLs, 30 features (SSL state, URL length, domain age, web traffic rank, use of shortening services, etc.). Binary target `Result`.
+- **Network traffic** — `time_series_network_traffic.csv`: 1,000 records of timestamp, source/destination IP, and data transferred (MB).
 
 ## 📈 Results
 
-<!-- Fill in a results table, e.g.: -->
+### Intrusion Detection
 
-| Model | Accuracy | Precision | Recall | F1-score |
-|---|---|---|---|---|
-| Decision Tree (IREP) | — | — | — | — |
-| AdaBoost + Decision Tree | — | — | — | — |
+| Model | Accuracy |
+|---|---|
+| Decision Tree (gini, max_depth=6) | 89.67% |
+| AdaBoost (1000 decision stumps) | 86.79% |
+| Decision Tree (baseline, AdaBoost notebook) | 82.39% |
+| Logistic Regression | 74.69% |
+| Pruned rule set (IREP-style extraction) | 55.29% |
 
-<!-- Add a short takeaway, e.g. "AdaBoost improved recall on minority attack classes by X%" -->
+> The rule-extraction approach trades accuracy for interpretability — it's included to show that trade-off explicitly, not as the top-performing model. AdaBoost's 5-fold cross-validation accuracy stayed consistent (~86–88%), confirming it wasn't overfitting.
+
+### Phishing Website Detection
+
+| Model | Accuracy |
+|---|---|
+| XGBoost | 97.15% |
+| Neural Network (Keras, 64-32-16-1) | 97.01% |
+| Random Forest | 96.61% |
+| Logistic Regression | 92.94% |
+| SVM (RBF kernel) | 66.21% |
 
 ## 🛠️ Tech Stack
 
-Python · scikit-learn · pandas · NumPy · Matplotlib · Jupyter Notebook
+Python · scikit-learn · TensorFlow/Keras · XGBoost · pandas · NumPy · Matplotlib · Seaborn
 
 ## 🚀 How to Run
 
 ```bash
-git clone https://github.com/shalu236616/ai-ml-intrusion-detection.git
-cd ai-ml-intrusion-detection
+git clone https://github.com/shalu236616/ai-ml-cybersecurity-projects.git
+cd ai-ml-cybersecurity-projects
 pip install -r requirements.txt
 jupyter notebook
 ```
 
+## 👤 Author
+
+Shalu Tiwari — M.Tech (CS), South Asian University
+
 ## 📝 Notes
 
-This work explores classical ML approaches to intrusion detection and connects to ongoing research into federated learning for secure IoT threat detection.
+Coursework and self-directed exploration in applied ML for cybersecurity, spanning classical ML, ensemble methods, and deep learning. The intrusion detection work connects to ongoing thesis research in federated learning for secure IoT threat detection.
